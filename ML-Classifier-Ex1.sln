@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classifier-Ex1", "ClassLibrary1\Classifier-Ex1.csproj", "{709EF0EB-2545-43E3-890E-5FFFB8C0B831}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML-Classifier-Ex1-Tests", "ML-Classifier-Ex1-Tests\ML-Classifier-Ex1-Tests.csproj", "{32575626-CBD5-461F-97BA-C1B2A8BD5786}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{709EF0EB-2545-43E3-890E-5FFFB8C0B831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{709EF0EB-2545-43E3-890E-5FFFB8C0B831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{709EF0EB-2545-43E3-890E-5FFFB8C0B831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{709EF0EB-2545-43E3-890E-5FFFB8C0B831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32575626-CBD5-461F-97BA-C1B2A8BD5786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32575626-CBD5-461F-97BA-C1B2A8BD5786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32575626-CBD5-461F-97BA-C1B2A8BD5786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32575626-CBD5-461F-97BA-C1B2A8BD5786}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0028028B-0346-4A18-8D7A-020D7B3AF184}
+	EndGlobalSection
+EndGlobal

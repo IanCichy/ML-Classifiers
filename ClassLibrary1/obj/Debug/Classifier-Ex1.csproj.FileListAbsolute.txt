@@ -1,0 +1,17 @@
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.dll.config
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.dll
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.MachineLearning.dll
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.Math.Core.dll
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.Math.dll
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.Statistics.dll
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.xml
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.MachineLearning.xml
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.Math.xml
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.Math.Core.xml
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\bin\Debug\Accord.Statistics.xml
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\obj\Debug\Classifier-Ex1.csproj.CoreCompileInputs.cache
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
+c:\users\icichy\Source\Repos\ClassLibrary1\ClassLibrary1\obj\Debug\Classifier-Ex1.csprojResolveAssemblyReference.cache
