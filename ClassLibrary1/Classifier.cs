@@ -14,12 +14,16 @@ namespace Classifier_Ex1
 {
     public class Classifier
     {
+        //Outlook 5 possible values (sunny, overcast, rain, snow, sleet)
+        //Temperature 4 possible values (hot, mild, cool, cold)  
+        //Humidity 3 possible values (high, normal, low)    
+        //Wind 2 possible values (weak, strong) 
+
         public Accord.Statistics.Filters.Codification codebook { get; }
         public DecisionTree tree { get; }
 
         public Classifier()
         {
-            //Day,Outlook,Temperature,Humidity,Wind,PlayTennis
             string filedata = System.IO.File.ReadAllText("../runData1.txt");
 
             string[] inputColumns =
@@ -29,8 +33,6 @@ namespace Classifier_Ex1
 
             string outputColumn = "PlayTennis";
 
-            // Let's populate a data table with this information.
-            // 
             DataTable data = new DataTable("Internet Services Run Calculator");
             data.Columns.Add(inputColumns);
             data.Columns.Add(outputColumn);
@@ -53,10 +55,7 @@ namespace Classifier_Ex1
             DecisionVariable[] attributes = DecisionVariable.FromCodebook(codebook, decisionVariables);
             // Create a teacher ID3 algorithm
             var id3learning = new ID3Learning(attributes);
-            //new DecisionVariable("Outlook",     5), // 5 possible values (sunny, overcast, rain, snow, sleet)
-            //new DecisionVariable("Temperature", 4), // 4 possible values (hot, mild, cool, cold)  
-            //new DecisionVariable("Humidity",    3), // 3 possible values (high, normal, low)    
-            //new DecisionVariable("Wind",        2)  // 2 possible values (weak, strong) 
+
 
             tree = id3learning.Learn(inputs, outputs);
 
