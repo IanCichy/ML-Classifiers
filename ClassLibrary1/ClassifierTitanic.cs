@@ -1,6 +1,7 @@
 ﻿using Accord;
 using Accord.MachineLearning.DecisionTrees;
 using Accord.MachineLearning.DecisionTrees.Learning;
+using Accord.MachineLearning.DecisionTrees.Rules;
 using Accord.Math;
 using Accord.Math.Optimization.Losses;
 using Accord.Statistics.Filters;
@@ -34,7 +35,7 @@ namespace Classifier_Ex1
         * Survived - 2 possible values (yes, no)
         */
 
-        public Accord.Statistics.Filters.Codification codebook { get; }
+        public Codification codebook { get; }
         public DecisionTree tree { get; }
 
         DataTable rawData { get; set; }
@@ -78,13 +79,14 @@ namespace Classifier_Ex1
             //Clean up data representation and missing data
             rawData = cleanData(rawData);
 
-            DataTable[] dt = splitDataForTraining(rawData, .8);
+            DataTable[] dt = splitDataForTraining(rawData, .8, inputColumns, outputColumn);
             trainingData = dt[0];
             testingData = dt[1];
 
 
 
             //---------
+            codebook = new Codification(trainingData);
 
             DataTable symbols = codebook.Apply(trainingData);
             int[][] inputs = symbols.ToJagged<int>("Pclass", "Title", "Sex", "Age", "SibSp", "Parch", "Fare", "Cabin", "Embarked");
@@ -99,10 +101,15 @@ namespace Classifier_Ex1
             // Create a teaching algorithm:
             var teacher = new C45Learning()
             {
-                new DecisionVariable("sepal length", DecisionVariableKind.Continuous),
-                new DecisionVariable("sepal width", DecisionVariableKind.Continuous),
-                new DecisionVariable("petal length", DecisionVariableKind.Continuous),
-                new DecisionVariable("petal width", DecisionVariableKind.Continuous),
+                new DecisionVariable("Pclass", DecisionVariableKind.Discrete),
+                new DecisionVariable("Title", DecisionVariableKind.Discrete),
+                new DecisionVariable("Sex", DecisionVariableKind.Discrete),
+                new DecisionVariable("Age", DecisionVariableKind.Continuous),
+                new DecisionVariable("SibSp", DecisionVariableKind.Continuous),
+                new DecisionVariable("Parch", DecisionVariableKind.Continuous),
+                new DecisionVariable("Fare", DecisionVariableKind.Continuous),
+                new DecisionVariable("Cabin", DecisionVariableKind.Discrete),
+                new DecisionVariable("Embarked", DecisionVariableKind.Discrete)
             };
 
             // and induce a decision tree from the data:
@@ -111,13 +118,21 @@ namespace Classifier_Ex1
             // To get the estimated class labels, we can use
             int[] predicted = tree.Decide(inputs);
 
-            // And the classification error (of 0.0) can be computed as 
-            double error = new ZeroOneLoss(outputs).Loss(tree.Decide(inputs));
 
-            // To compute a decision for one of the input points,
-            //   such as the 25-th example in the set, we can use
-            // 
-            int y = tree.Decide(inputs[25]); // should be 1
+            // Moreover, we may decide to convert our tree to a set of rules:
+            DecisionSet rules = tree.ToRules();
+
+            // And using the codebook, we can inspect the tree reasoning:
+            string ruleText = rules.ToString(codebook, "Output",
+                System.Globalization.CultureInfo.InvariantCulture);
+
+            //// And the classification error (of 0.0) can be computed as 
+            //double error = new ZeroOneLoss(outputs).Loss(tree.Decide(inputs));
+
+            //// To compute a decision for one of the input points,
+            ////   such as the 25-th example in the set, we can use
+            //// 
+            //int y = tree.Decide(inputs[25]); // should be 1
 
 
 
@@ -180,7 +195,7 @@ namespace Classifier_Ex1
         private void cleanTitles(DataTable dt)
         {
             HashSet<string> titleMR = new HashSet<string>{
-                "Don", "Major", "Capt", "Jonkheer", "Rev", "Col" };
+                "Don", "Major", "Capt", "Jonkheer", "Rev", "Col", "Master" };
             HashSet<string> titleMRS = new HashSet<string> {
                 "Countess", "Mme", "Lady" };
             HashSet<string> titleMISS = new HashSet<string> {
@@ -218,10 +233,15 @@ namespace Classifier_Ex1
         }
 
 
-        private DataTable[] splitDataForTraining(DataTable table, double amtToTrain)
+        private DataTable[] splitDataForTraining(DataTable table, double amtToTrain, string[] input, string output)
         {
             DataTable trainingSet = new DataTable();
+            trainingSet.Columns.Add(input);
+            trainingSet.Columns.Add(output);
+
             DataTable testingSet = new DataTable();
+            testingSet.Columns.Add(input);
+            testingSet.Columns.Add(output);
 
             DataTable dt = Extensions.OrderRandomly(table.AsEnumerable()).CopyToDataTable();
 
