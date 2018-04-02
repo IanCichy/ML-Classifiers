@@ -3,6 +3,7 @@ using Accord.MachineLearning.DecisionTrees;
 using Accord.MachineLearning.DecisionTrees.Learning;
 using Accord.Math;
 using Accord.Math.Optimization.Losses;
+using Accord.Statistics.Filters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -80,6 +81,43 @@ namespace Classifier_Ex1
             DataTable[] dt = splitDataForTraining(rawData, .8);
             trainingData = dt[0];
             testingData = dt[1];
+
+
+
+            //---------
+
+            DataTable symbols = codebook.Apply(trainingData);
+            int[][] inputs = symbols.ToJagged<int>("Pclass", "Title", "Sex", "Age", "SibSp", "Parch", "Fare", "Cabin", "Embarked");
+            int[] outputs = symbols.ToArray<int>("Survived");
+
+
+            // We can either specify the decision attributes we want
+            // manually, or we can ask the codebook to do it for us:
+            DecisionVariable[] attributes = DecisionVariable.FromCodebook(codebook, inputColumns);
+
+
+            // Create a teaching algorithm:
+            var teacher = new C45Learning()
+            {
+                new DecisionVariable("sepal length", DecisionVariableKind.Continuous),
+                new DecisionVariable("sepal width", DecisionVariableKind.Continuous),
+                new DecisionVariable("petal length", DecisionVariableKind.Continuous),
+                new DecisionVariable("petal width", DecisionVariableKind.Continuous),
+            };
+
+            // and induce a decision tree from the data:
+            DecisionTree tree = teacher.Learn(inputs, outputs);
+
+            // To get the estimated class labels, we can use
+            int[] predicted = tree.Decide(inputs);
+
+            // And the classification error (of 0.0) can be computed as 
+            double error = new ZeroOneLoss(outputs).Loss(tree.Decide(inputs));
+
+            // To compute a decision for one of the input points,
+            //   such as the 25-th example in the set, we can use
+            // 
+            int y = tree.Decide(inputs[25]); // should be 1
 
 
 
