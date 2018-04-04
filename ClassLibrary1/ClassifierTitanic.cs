@@ -83,8 +83,6 @@ namespace Classifier_Ex1
             trainingData = dt[0];
             testingData = dt[1];
 
-
-
             //---------
             codebook = new Codification(trainingData);
 
@@ -97,20 +95,17 @@ namespace Classifier_Ex1
             // manually, or we can ask the codebook to do it for us:
             DecisionVariable[] attributes = DecisionVariable.FromCodebook(codebook, inputColumns);
 
-
             // Create a teaching algorithm:
-            var teacher = new C45Learning()
-            {
-                new DecisionVariable("Pclass", DecisionVariableKind.Discrete),
-                new DecisionVariable("Title", DecisionVariableKind.Discrete),
-                new DecisionVariable("Sex", DecisionVariableKind.Discrete),
-                new DecisionVariable("Age", DecisionVariableKind.Continuous),
-                new DecisionVariable("SibSp", DecisionVariableKind.Continuous),
-                new DecisionVariable("Parch", DecisionVariableKind.Continuous),
-                new DecisionVariable("Fare", DecisionVariableKind.Continuous),
-                new DecisionVariable("Cabin", DecisionVariableKind.Discrete),
-                new DecisionVariable("Embarked", DecisionVariableKind.Discrete)
-            };
+            var teacher = new C45Learning();
+            teacher.Add(attributes[0]);
+            teacher.Add(attributes[1]);
+            teacher.Add(attributes[4]);
+            teacher.Add(new DecisionVariable("Age", new DoubleRange(0, 99)));
+            teacher.Add(new DecisionVariable("SibSp", new DoubleRange(0, 10)));
+            teacher.Add(new DecisionVariable("Parch", new DoubleRange(0, 10)));
+            teacher.Add(new DecisionVariable("Fare", new DoubleRange(0, 400)));
+            teacher.Add(attributes[10]);
+            teacher.Add(attributes[11]);
 
             // and induce a decision tree from the data:
             DecisionTree tree = teacher.Learn(inputs, outputs);
@@ -123,7 +118,7 @@ namespace Classifier_Ex1
             DecisionSet rules = tree.ToRules();
 
             // And using the codebook, we can inspect the tree reasoning:
-            string ruleText = rules.ToString(codebook, "Output",
+            string ruleText = rules.ToString(codebook, "Survived",
                 System.Globalization.CultureInfo.InvariantCulture);
 
             //// And the classification error (of 0.0) can be computed as 
@@ -159,7 +154,6 @@ namespace Classifier_Ex1
             //cleanCabin(table);
 
             //DataTable newtable = new DataTable();
-
             //TODO: Copy only data columns we want into final data set to learn from
 
             return table;
@@ -195,7 +189,7 @@ namespace Classifier_Ex1
         private void cleanTitles(DataTable dt)
         {
             HashSet<string> titleMR = new HashSet<string>{
-                "Don", "Major", "Capt", "Jonkheer", "Rev", "Col", "Master" };
+                "Don", "Major", "Capt", "Jonkheer", "Rev", "Col", "Master", "Sir"};
             HashSet<string> titleMRS = new HashSet<string> {
                 "Countess", "Mme", "Lady" };
             HashSet<string> titleMISS = new HashSet<string> {
@@ -232,7 +226,6 @@ namespace Classifier_Ex1
             }
         }
 
-
         private DataTable[] splitDataForTraining(DataTable table, double amtToTrain, string[] input, string output)
         {
             DataTable trainingSet = new DataTable();
@@ -264,7 +257,6 @@ namespace Classifier_Ex1
 
     public static class Extensions
     {
-
         private static Random random = new Random();
 
         public static IEnumerable<T> OrderRandomly<T>(this IEnumerable<T> items)
