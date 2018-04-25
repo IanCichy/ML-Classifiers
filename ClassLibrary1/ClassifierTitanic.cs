@@ -42,6 +42,8 @@ namespace Classifier_Ex1
         DataTable trainingData { get; set; }
         DataTable testingData { get; set; }
 
+        int falsePositives = 0, truePositives = 0,
+            falseNegatives = 0, trueNegatives = 0;
 
         public ClassifierTitanic()
         {
@@ -121,6 +123,66 @@ namespace Classifier_Ex1
             string ruleText = rules.ToString(codebook, "Survived",
                 System.Globalization.CultureInfo.InvariantCulture);
 
+            foreach (DataRow d in testingData.Rows)
+            {
+
+                int[] tempVars = codebook.Transform(new[,]
+                {
+                { "Pclass",     d[0].ToString()   },
+                { "Title",      d[1].ToString()   },
+                { "Sex",        d[4].ToString()   },
+                { "Cabin",      d[10].ToString()  },
+                { "Embarked",   d[11].ToString()  }
+                });
+
+                int[] query = {
+                    tempVars[0],
+                    tempVars[1],
+                    tempVars[2],
+                    int.Parse(d[5].ToString()),
+                    int.Parse(d[6].ToString()),
+                    int.Parse(d[7].ToString()),
+                    int.Parse(d[9].ToString()),
+                    tempVars[3],
+                    tempVars[4]
+                };
+
+
+                int predictedValue = tree.Decide(query);
+                int actualValue = int.Parse(d[12].ToString());
+                if (predictedValue == actualValue)
+                {
+                    if(actualValue == 1)
+                    {
+                        truePositives++;
+                    }
+                    else
+                    {
+                        trueNegatives++;
+                    }
+                }
+                else
+                {
+                    if (actualValue == 1)
+                    {
+                        falseNegatives++;
+                    }
+                    else
+                    {
+                        falsePositives++;
+                    }
+                }
+
+
+            }
+
+
+            var dasdfasd = 5;
+
+
+
+
+
             //// And the classification error (of 0.0) can be computed as 
             //double error = new ZeroOneLoss(outputs).Loss(tree.Decide(inputs));
 
@@ -178,7 +240,7 @@ namespace Classifier_Ex1
 
             foreach (DataRow row in dt.Rows)
             {
-                row[fareColumnNumber] =  Math.Round(double.Parse(row[fareColumnNumber].ToString()));
+                row[fareColumnNumber] = Math.Round(double.Parse(row[fareColumnNumber].ToString()));
             }
         }
 
@@ -242,7 +304,7 @@ namespace Classifier_Ex1
 
             for (int x = 0; x < dt.Rows.Count; x++)
             {
-                if(x <= numRowsTrain)
+                if (x <= numRowsTrain)
                 {
                     trainingSet.Rows.Add(dt.Rows[x].ItemArray);
                 }
