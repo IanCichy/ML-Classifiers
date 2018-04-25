@@ -13,7 +13,6 @@ namespace ML_Classifier_Ex1_Tests
             var codebook = clasif.codebook;
             var tree = clasif.tree;
 
-
             int[] query = codebook.Transform(new[,]
             {
                 { "Outlook",     "sunny"  },

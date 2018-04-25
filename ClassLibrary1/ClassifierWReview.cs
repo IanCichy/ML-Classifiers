@@ -14,12 +14,18 @@ namespace Classifier_Ex1
 {
     public class ClassifierWReview
     {
+        //Outlook 5 possible values (sunny, overcast, rain, snow, sleet)
+        //Temperature 4 possible values (hot, mild, cool, cold)  
+        //Humidity 3 possible values (high, normal, low)    
+        //Wind 2 possible values (weak, strong) 
+        //SprintReview 2 possible values (yes, no)
+
         public Accord.Statistics.Filters.Codification codebook { get; }
         public DecisionTree tree { get; }
 
         public ClassifierWReview()
         {
-            //Day,Outlook,Temperature,Humidity,Wind,PlayTennis
+            //runData2 and runData2_1
             string filedata = System.IO.File.ReadAllText("../runData2_1.txt");
 
             string[] inputColumns =
@@ -29,8 +35,6 @@ namespace Classifier_Ex1
 
             string outputColumn = "PlayTennis";
 
-            // Let's populate a data table with this information.
-            // 
             DataTable data = new DataTable("Internet Services Run Calculator");
             data.Columns.Add(inputColumns);
             data.Columns.Add(outputColumn);
