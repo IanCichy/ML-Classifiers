@@ -21,7 +21,7 @@ namespace ML_Classifier_Ex1_Tests
                 { "Wind",        "strong" }
             });
             int predicted = tree.Decide(query);
-            string answer = codebook.Revert("PlayTennis", predicted);
+            string answer = codebook.Revert("GoRun", predicted);
 
 
             int[] query2 = codebook.Transform(new[,]
@@ -32,7 +32,7 @@ namespace ML_Classifier_Ex1_Tests
                 { "Wind",        "weak"     }
             });
             int predicted2 = tree.Decide(query2);
-            string answer2 = codebook.Revert("PlayTennis", predicted2);
+            string answer2 = codebook.Revert("GoRun", predicted2);
 
 
             int[] query3 = codebook.Transform(new[,]
@@ -43,7 +43,7 @@ namespace ML_Classifier_Ex1_Tests
                 { "Wind",        "weak"     }
             });
             int predicted3 = tree.Decide(query3);
-            string answer3 = codebook.Revert("PlayTennis", predicted3);
+            string answer3 = codebook.Revert("GoRun", predicted3);
         }
 
         [TestMethod]
@@ -52,7 +52,6 @@ namespace ML_Classifier_Ex1_Tests
             var clasif = new Classifier_Ex1.ClassifierWReview();
             var codebook = clasif.codebook;
             var tree = clasif.tree;
-
 
             int[] query = codebook.Transform(new[,]
             {
@@ -63,7 +62,7 @@ namespace ML_Classifier_Ex1_Tests
                 { "SprintReview","yes"      }
             });
             int predicted = tree.Decide(query);
-            string answer = codebook.Revert("PlayTennis", predicted);
+            string answer = codebook.Revert("GoRun", predicted);
 
             int[] query2 = codebook.Transform(new[,]
             {
@@ -74,7 +73,7 @@ namespace ML_Classifier_Ex1_Tests
                 { "SprintReview","yes"      }
             });
             int predicted2 = tree.Decide(query2);
-            string answer2 = codebook.Revert("PlayTennis", predicted2);
+            string answer2 = codebook.Revert("GoRun", predicted2);
 
             int[] query2_1 = codebook.Transform(new[,]
             {
@@ -85,7 +84,7 @@ namespace ML_Classifier_Ex1_Tests
                 { "SprintReview","no"      }
             });
             int predicted2_1 = tree.Decide(query2_1);
-            string answer2_1 = codebook.Revert("PlayTennis", predicted2_1);
+            string answer2_1 = codebook.Revert("GoRun", predicted2_1);
 
             int[] query3 = codebook.Transform(new[,]
             {
@@ -96,9 +95,8 @@ namespace ML_Classifier_Ex1_Tests
                 { "SprintReview","no"       }
             });
             int predicted3 = tree.Decide(query3);
-            string answer3 = codebook.Revert("PlayTennis", predicted3);
+            string answer3 = codebook.Revert("GoRun", predicted3);
         }
-
 
         [TestMethod]
         public void TestResultsTitanic()
@@ -107,7 +105,5 @@ namespace ML_Classifier_Ex1_Tests
             //var codebook = clasif.codebook;
             //var tree = clasif.tree;
         }
-
-
     }
 }

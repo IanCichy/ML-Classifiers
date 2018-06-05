@@ -31,7 +31,7 @@ namespace Classifier_Ex1
                 "Day","Outlook","Temperature","Humidity","Wind"
             };
 
-            string outputColumn = "PlayTennis";
+            string outputColumn = "GoRun";
 
             DataTable data = new DataTable("Internet Services Run Calculator");
             data.Columns.Add(inputColumns);
@@ -49,7 +49,7 @@ namespace Classifier_Ex1
             // Translate our training data into integer symbols using our codebook:
             DataTable symbols = codebook.Apply(data);
             int[][] inputs = symbols.ToJagged<int>("Outlook", "Temperature", "Humidity", "Wind");
-            int[] outputs = symbols.ToArray<int>("PlayTennis");
+            int[] outputs = symbols.ToArray<int>("GoRun");
 
             string[] decisionVariables = { "Outlook", "Temperature", "Humidity", "Wind" };
             DecisionVariable[] attributes = DecisionVariable.FromCodebook(codebook, decisionVariables);

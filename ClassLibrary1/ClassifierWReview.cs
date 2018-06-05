@@ -26,6 +26,7 @@ namespace Classifier_Ex1
         public ClassifierWReview()
         {
             //runData2 and runData2_1
+            //string filedata = System.IO.File.ReadAllText("../runData2.txt");
             string filedata = System.IO.File.ReadAllText("../runData2_1.txt");
 
             string[] inputColumns =
@@ -33,7 +34,7 @@ namespace Classifier_Ex1
                 "Day","Outlook","Temperature","Humidity","Wind","SprintReview"
             };
 
-            string outputColumn = "PlayTennis";
+            string outputColumn = "GoRun";
 
             DataTable data = new DataTable("Internet Services Run Calculator");
             data.Columns.Add(inputColumns);
@@ -51,7 +52,7 @@ namespace Classifier_Ex1
             // Translate our training data into integer symbols using our codebook:
             DataTable symbols = codebook.Apply(data);
             int[][] inputs = symbols.ToJagged<int>("Outlook", "Temperature", "Humidity", "Wind", "SprintReview");
-            int[] outputs = symbols.ToArray<int>("PlayTennis");
+            int[] outputs = symbols.ToArray<int>("GoRun");
 
             string[] decisionVariables = { "Outlook", "Temperature", "Humidity", "Wind", "SprintReview" };
             DecisionVariable[] attributes = DecisionVariable.FromCodebook(codebook, decisionVariables);
@@ -59,7 +60,6 @@ namespace Classifier_Ex1
             var id3learning = new ID3Learning(attributes);
 
             tree = id3learning.Learn(inputs, outputs);
-
             // Compute the training error when predicting training instances
             double error = new ZeroOneLoss(outputs).Loss(tree.Decide(inputs));
 
